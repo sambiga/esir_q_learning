@@ -885,7 +885,7 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
     function getAction(state) {
             // 10% par exemple du temps en excute une action alÃ©atoire (i.e. exploration)
             // pour le reste choisir la meilleur action (i.e. exploitation) ... voir la matrice Q 
-            return ((Math.random <= 0.1) ? Math.floor(Math.random()*10) : selectBestAction(state));
+            return ((Math.random() <= 0.1) ? Math.floor(Math.random()*10) : selectBestAction(state));
         }
         
     function selectBestAction(state) {
@@ -903,12 +903,12 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
         // s, ->a
         // new: s', r = getReward(s')
         // Q(s,a) = Q(s,a) + alpha  (r + gamma Q(s',*) - Q(s,a))
-        var new_action = getAction(state_current);
+        var current_action = getAction(state_current);
         console.log(Q[state_past][action_past]);
-        Q[state_past][action_past] = Q[state_past][action_past] + 0.1*(getReward(state_current)+0.99*selectBestAction(state_current)-Q[state_past][action_past]);
+        Q[state_past][action_past] = Q[state_past][action_past] + 0.1*(getReward(state_current)+0.99*current_action-Q[state_past][action_past]);
         console.log(Q[state_past][action_past])
         state_past = state_current;
-        action_past = selectBestAction(state_current);
+        action_past = current_action;
     }
 
     //end YH
@@ -948,7 +948,7 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
                 //get butter toget state
                 //fait tout dans l'aglo sauf updateQ ligne Q[][]
 
-                $scope.player.setQualityFor('video', Q[current_state][current_action]);//ici pour appliquer 
+                $scope.player.setQualityFor('video', current_action);//ici pour appliquer 
                             var initialConfig = {
                 'debug': {
                     'logLevel': dashjs.Debug.LOG_LEVEL_INFO
