@@ -898,15 +898,13 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
     }
 
     function updateQ(state_past, action_past, state_current) { // SARS
-        // Equation de bellman
-        // alpha = 0.1, gamma = 0.99
-        // s, ->a
-        // new: s', r = getReward(s')
-        // Q(s,a) = Q(s,a) + alpha  (r + gamma Q(s',*) - Q(s,a))
+
         var current_action = getAction(state_current);
-        console.log(Q[state_past][action_past]);
+
+        console.log(`state ${state_past} action : ${action_past}`);
+        console.log(`value ${Q[state_past][action_past]}`);
+        
         Q[state_past][action_past] = Q[state_past][action_past] + 0.1*(getReward(state_current)+0.99*current_action-Q[state_past][action_past]);
-        console.log(Q[state_past][action_past])
         state_past = state_current;
         action_past = current_action;
     }
@@ -926,7 +924,6 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
             var repSwitch = dashMetrics.getCurrentRepresentationSwitch(type, true);
             var bufferLevel = dashMetrics.getCurrentBufferLevel(type, true);
 
-            console.log(`buffer level${bufferLevel}`);
             
             //deb YH
             
