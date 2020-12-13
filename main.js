@@ -878,7 +878,7 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
     function getState(bufferLevel) {
         
         for (let i = 0; i < 4; i++){
-            if(10*i<= bufferLevel <= (i+1)*10) return i;
+            if(10*i< bufferLevel < (i+1)*10) return i;
             return 4;
         }
     }
@@ -897,16 +897,12 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
         return [0.,0.3,1,0.6,0.1][state];//S1 -> r = 0; S2 -> r = 0.3; S3 -> r = 1 (cible); S4 -> r = 0.6; S5 -> r = 0.1
     }
 
-    function updateQ(state_past, action_past, state_current) { // SARS
-
-        var current_action = getAction(state_current);
+    function updateQ(state_past, action_past, state_current, current_action) { // SARS
 
         console.log(`state ${state_past} action : ${action_past}`);
         console.log(`value ${Q[state_past][action_past]}`);
         
         Q[state_past][action_past] = Q[state_past][action_past] + 0.1*(getReward(state_current)+0.99*current_action-Q[state_past][action_past]);
-        state_past = state_current;
-        action_past = current_action;
     }
 
     //end YH
@@ -935,13 +931,15 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
                     
                     //current_state = getState(bufferLevel);
                     //current_action = getAction(current_state)
-                    
-                    console.log(`first state :${state_past} and action : ${action_past}`);
+                    console.log(`first state :${current_state} and action : ${current_action}`);
                          
                 }
                 else{
                     next_state = getState(bufferLevel);
-                    updateQ(current_state, current_action, next_state);
+                    next_action = getAction(next_state);
+                    updateQ(current_state, current_action, next_state, next_action);
+                    current_state = next_state;
+                    
                 }
                 //selectVideoQuality(selindex)
                 //get butter toget state
