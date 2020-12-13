@@ -894,7 +894,7 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
         
     function getReward(state) {
         
-        return [0,0.3,1,0.6,0.1][state];//S1 -> r = 0; S2 -> r = 0.3; S3 -> r = 1 (cible); S4 -> r = 0.6; S5 -> r = 0.1
+        return [0.,0.3,1,0.6,0.1][state];//S1 -> r = 0; S2 -> r = 0.3; S3 -> r = 1 (cible); S4 -> r = 0.6; S5 -> r = 0.1
     }
 
     function updateQ(state_past, action_past, state_current) { // SARS
@@ -934,7 +934,7 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
                     first = false;
                     
                     current_state = getState(bufferLevel);
-                    current_action = getAction()
+                    current_action = getAction(current_state)
                         
                 }
                 else{
