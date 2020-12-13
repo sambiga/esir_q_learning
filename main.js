@@ -877,8 +877,9 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
 
     function getState(bufferLevel) {
         
-        for (let i = 0; i < 5; i++){
+        for (let i = 0; i < 4; i++){
             if(10*i< bufferLevel < (i+1)*10) return i;
+            return 4;
         }
     }
     function getAction(state) {
@@ -903,15 +904,16 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
         // new: s', r = getReward(s')
         // Q(s,a) = Q(s,a) + alpha  (r + gamma Q(s',*) - Q(s,a))
         var new_action = getAction(state_current);
-
+        console.log(Q[state_past][action_past]);
         Q[state_past][action_past] = Q[state_past][action_past] + 0.1*(getReward(state_current)+0.99*selectBestAction(state_current)-Q[state_past][action_past]);
- 
+        console.log(Q[state_past][action_past])
         state_past = state_current;
         action_past = selectBestAction(state_current);
     }
 
     //end YH
     var current_state = 1, current_action = 1, next_state = 0, first = true;
+    
     function updateMetrics(type) {
         var dashMetrics = $scope.player.getDashMetrics();
         var dashAdapter = $scope.player.getDashAdapter();
@@ -924,7 +926,7 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
             var repSwitch = dashMetrics.getCurrentRepresentationSwitch(type, true);
             var bufferLevel = dashMetrics.getCurrentBufferLevel(type, true);
 
-            console.log(bufferLevel);
+            console.log(`buffer level${bufferLevel}`);
             
             //deb YH
             
