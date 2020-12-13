@@ -878,7 +878,7 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
     function getState(bufferLevel) {
         
         for (let i = 0; i < 4; i++){
-            if(10*i< bufferLevel < (i+1)*10) return i;
+            if(10*i<= bufferLevel <= (i+1)*10) return i;
             return 4;
         }
     }
@@ -933,9 +933,11 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
                 if(first){
                     first = false;
                     
-                    current_state = getState(bufferLevel);
-                    current_action = getAction(current_state)
-                        
+                    //current_state = getState(bufferLevel);
+                    //current_action = getAction(current_state)
+                    
+                    console.log(`first state :${state_past} and action : ${action_past}`);
+                         
                 }
                 else{
                     next_state = getState(bufferLevel);
