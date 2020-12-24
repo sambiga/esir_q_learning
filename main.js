@@ -889,7 +889,14 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
         }
         
     function selectBestAction(state) {
-            return Math.max.apply(Math, Q[state]);
+        
+        var index = 0;
+        for (i = 1; i < Q[state].length; i++) {
+            if(Q[state][i] > Q[state][index]){ 
+                index = i;
+            }
+          }
+        return index;
         }
         
     function getReward(state) {
