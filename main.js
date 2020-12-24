@@ -878,7 +878,11 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
     function getState(bufferLevel) {
         
         for (let i = 0; i < 4; i++){
-            if(10*i< bufferLevel < (i+1)*10) return i;
+            if(10*i< bufferLevel < (i+1)*10){ 
+                console.log(`buffer ${bufferLevel} index : ${i}`);
+                return i;
+            }
+            console.log(`buffer ${bufferLevel} index : ${4}`);
             return 4;
         }
     }
@@ -891,7 +895,7 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
     function selectBestAction(state) {
         
         var index = 0;
-        for (i = 1; i < Q[state].length; i++) {
+        for (let i = 1; i < Q[state].length; i++) {
             if(Q[state][i] > Q[state][index]){ 
                 index = i;
             }
