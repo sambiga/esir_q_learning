@@ -889,7 +889,7 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
         }
         
     function selectBestAction(state) {
-            return Q[state].max;
+            return Math.max.apply(Math, Q[state]);
         }
         
     function getReward(state) {
@@ -934,12 +934,11 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
                     //current_action = getAction(current_state)
                     console.log(`first state :${current_state} and action : ${current_action}`);
                          
-                }
-                else{
+                }else{
                     next_state = getState(bufferLevel);
                     var next_action = getAction(next_state);
                     
-                    console.log(`else state :${current_state} and action : ${current_action}`);
+                    console.log(`else state :${current_state} and action : ${current_action} buffer : ${bufferLevel}`);
                     
                     updateQ(current_state, current_action, next_state, next_action);
                     current_state = next_state; current_action = next_action;
