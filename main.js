@@ -902,6 +902,7 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
         console.log(`state ${state_past} action : ${action_past}`);
         console.log(`value ${Q[state_past][action_past]}`);
         
+        //got some problem NaN
         Q[state_past][action_past] = Q[state_past][action_past] + 0.1*(getReward(state_current)+0.99*current_action-Q[state_past][action_past]);
     }
 
@@ -936,9 +937,14 @@ app.controller('DashController', function ($scope, sources, contributors, dashif
                 }
                 else{
                     next_state = getState(bufferLevel);
-                    next_action = getAction(next_state);
+                    var next_action = getAction(next_state);
+                    
+                    console.log(`else state :${current_state} and action : ${current_action}`);
+                    
                     updateQ(current_state, current_action, next_state, next_action);
-                    current_state = next_state;
+                    current_state = next_state; current_action = next_action;
+                    
+                    console.log(`else futur state :${current_state} and futur action : ${current_action}`);
                     
                 }
                 //selectVideoQuality(selindex)
